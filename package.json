@@ -1,8 +1,16 @@
 {
   "name": "n8n-nodes-authentica",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Authentica (Balance + OTP Send/Verify) node for n8n",
-  "keywords": ["n8n-community-node-package","n8n","authentica","otp","sms","saudi","2fa"],
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "authentica",
+    "otp",
+    "sms",
+    "saudi",
+    "2fa"
+  ],
   "license": "MIT",
   "homepage": "https://authentica.sa",
   "author": {
