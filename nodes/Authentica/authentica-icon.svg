@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+  <!-- Clean, simple icon optimized for n8n -->
+  
+  <!-- Background circle -->
+  <circle cx="30" cy="30" r="28" fill="#68af81"/>
+  <circle cx="30" cy="30" r="28" fill="none" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Face recognition symbol -->
+  <g transform="translate(30, 22)">
+    <!-- Face outline -->
+    <ellipse cx="0" cy="0" rx="10" ry="12" fill="none" stroke="#ffffff" stroke-width="2"/>
+    <!-- Eyes -->
+    <circle cx="-4" cy="-3" r="2" fill="#ffffff"/>
+    <circle cx="4" cy="-3" r="2" fill="#ffffff"/>
+    <!-- Mouth -->
+    <path d="M -4 4 Q 0 8 4 4" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Voice/audio symbol -->
+  <g transform="translate(30, 45)">
+    <!-- Sound waves -->
+    <path d="M -8 0 Q -4 -4 0 0 Q 4 4 8 0" 
+          fill="none" stroke="#66f295" stroke-width="2" stroke-linecap="round"/>
+    <path d="M -6 0 Q -3 -2 0 0 Q 3 2 6 0" 
+          fill="none" stroke="#66f295" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Security/verification checkmark -->
+  <path d="M 45 15 L 50 20 L 57 13" 
+        fill="none" stroke="#66f295" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

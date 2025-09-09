@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+  <!-- Simplified Authentica icon for n8n -->
+  <rect width="60" height="60" rx="12" fill="#68af81"/>
+  
+  <!-- Main circular element representing biometric verification -->
+  <circle cx="30" cy="25" r="12" fill="none" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Eye symbol for face recognition -->
+  <ellipse cx="30" cy="25" rx="8" ry="6" fill="#ffffff"/>
+  <circle cx="30" cy="25" r="3" fill="#68af81"/>
+  
+  <!-- Sound waves for voice recognition -->
+  <path d="M15 40 Q20 35 25 40 Q30 45 35 40 Q40 35 45 40" 
+        fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Security checkmark -->
+  <path d="M20 50 L26 56 L40 42" 
+        fill="none" stroke="#66f295" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

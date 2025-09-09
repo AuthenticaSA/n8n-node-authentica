@@ -1,48 +1,227 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+<p align="center">
+  <img src="nodes/Authentica/authentica.svg" alt="Authentica" width="120" />
+</p>
 
-# n8n-nodes-starter
+<h1 align="center">Authentica for n8n</h1>
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+<p align="center">
+  Saudi identity & communications APIs for OTP and balance — packaged as an n8n Community Node.
+</p>
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+---
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+## ✨ What’s included in v0.1.0
 
-## Prerequisites
+This first release focuses on the essentials:
 
-You need the following installed on your development machine:
+* **Account → Get Balance**
+* **OTP → Send** (SMS / WhatsApp / Email)
+* **OTP → Verify**
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+> Face & Voice operations will ship in a later version. The UI only exposes the three endpoints above.
 
-## Using this starter
+---
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+## 🧰 Requirements
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+* n8n **v1.x** (self‑hosted or desktop)
+* Node.js **>= 20** (for local development)
+* An **Authentica API key** (header: `X-Authorization`)
 
-## More information
+---
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+## 🚀 Install
 
-## License
+### Install from the n8n editor (Community Nodes)
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+1. Open the n8n editor → **Settings → Community Nodes → Install**.
+2. Search for **Authentica** (package **`n8n-nodes-authentica`**).
+3. Click **Install** and confirm the warning screen.
+4. n8n downloads the package from npm and reloads. You’ll now see **Authentica** in the Nodes panel.
+
+> If you don’t see “Community Nodes”, your admin needs to enable it for your instance. On n8n Cloud it’s available by default.
+
+### Update / Uninstall
+
+* **Update:** Settings → Community Nodes → find *Authentica* → **Update**.
+* **Uninstall:** Settings → Community Nodes → find *Authentica* → **Uninstall**.
+
+### Offline / Self‑hosted without Community Nodes
+
+If Community Nodes is disabled in your environment, install via npm on the host that runs n8n and point the extensions path:
+
+```bash
+npm i n8n-nodes-authentica
+export N8N_CUSTOM_EXTENSIONS="/absolute/path/to/node_modules/n8n-nodes-authentica"
+n8n start
+```
+
+---
+
+## 🔐 Credentials — *Authentica API*
+
+Create a new credential in **Credentials → New → Authentica API**.
+
+**Fields**
+
+* **API Key** *(required)*: your Authentica key (sent as `X-Authorization`)
+* **Base URL** *(optional)*: defaults to `https://api.authentica.sa`
+
+**Test**
+
+* Click **Test** to call `/api/v2/balance` — you should see **Success**.
+
+---
+
+## 🧩 Node usage
+
+### 1) Account → Get Balance
+
+* **Resource:** `Account`
+* **Operation:** `Get Balance`
+* **Output:** `{ balance: number, currency?: string, ... }`
+
+### 2) OTP → Send
+
+* **Resource:** `OTP`
+* **Operation:** `Send`
+* **Channel:** `SMS` | `WhatsApp` | `Email`
+* **Phone** *(required for SMS/WhatsApp)*: **E.164** format, e.g. `+9665XXXXXXX`
+* **Email** *(required for Email)*: valid email
+* **Optional:** message/template fields as supported by your Authentica app
+
+**Output (example)**
+
+```json
+{
+  "status": "sent",
+  "recipient": "+9665XXXXXXX",
+  "channel": "sms",
+  "requestId": "req_12345"
+}
+```
+
+### 3) OTP → Verify
+
+* **Resource:** `OTP`
+* **Operation:** `Verify`
+* **Verify With:** `Phone` or `Email`
+* **Code:** the OTP the user received
+
+**Output (example)**
+
+```json
+{
+  "verified": true,
+  "recipient": "+9665XXXXXXX",
+  "method": "phone"
+}
+```
+
+> **Validation built‑in:**
+>
+> * Phone must be E.164 (`+<country><number>`). Example KSA mobile: `+9665…`
+> * Email must be a well‑formed address.
+
+---
+
+## 🧪 Quick‑start workflows (JSON)
+
+Exported examples to help you test fast:
+
+* `examples/authentica-balance.json` — single node, get balance
+* `examples/authentica-otp-send.json` — send OTP to phone/email
+* `examples/authentica-otp-verify.json` — verify a received OTP code
+
+> In the editor, **Import from file** and run. Make sure your **Authentica API** credential is configured.
+
+---
+
+## 🐞 Troubleshooting
+
+* **401 Unauthorized** → API key missing/invalid. Recheck the *Authentica API* credential, header `X-Authorization`.
+* **422 Unprocessable Entity** → A required field is missing or invalid (e.g., non‑E.164 phone). Fix inputs and retry.
+* **Rate limiting** → If you expect bursts, add a **Wait** or **Rate Limit** node before the Authentica node.
+* **Large execution data** → Run with the top‑bar **Execute workflow** button, or enable on‑disk binaries.
+
+---
+
+## 📦 Build locally (contributors)
+
+```bash
+npm ci
+npm run lint
+npm run build
+# local load
+export N8N_CUSTOM_EXTENSIONS="$PWD"
+n8n start
+```
+
+The build copies the SVG icon to `dist` so the node shows the Authentica logo inside the editor.
+
+---
+
+## 🔒 Security & privacy
+
+* Keep API keys in **Credentials** (never hardcode in workflows).
+* Use **E.164** phones and never log sensitive PII in plaintext nodes.
+
+---
+
+## 🗺️ Roadmap (next releases)
+
+* Face/Voice enrollment & verification
+* Webhooks for async outcomes (e.g., OTP delivery status)
+* Additional SMS features (sender IDs, templates)
+
+---
+
+## 🙌 Thanks
+
+Built by the **Authentica** team to help developers verify users and reduce fraud in Saudi Arabia.
+
+* Website: [https://authentica.sa](https://authentica.sa)
+* Issues / Feedback: open an issue in this repo
+
+---
+
+## 📄 License (MIT)
+
+```
+MIT License
+
+Copyright (c) 2025 Authentica
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+### File layout (what gets published)
+
+```
+.
+├─ dist/                               # compiled node + credentials + svg
+├─ README.md                           # this file
+├─ LICENSE
+├─ CHANGELOG.md
+└─ package.json
+```
+
+> If the logo doesn’t render on npm, update the `<img>` at the top to a public URL (e.g., GitHub raw link).

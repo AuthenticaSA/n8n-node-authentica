@@ -1,24 +1,20 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "n8n-nodes-authentica",
   "version": "0.1.0",
-  "description": "",
-  "keywords": [
-    "n8n-community-node-package"
-  ],
+  "description": "Authentica (Balance + OTP Send/Verify) node for n8n",
+  "keywords": ["n8n-community-node-package","n8n","authentica","otp","sms","saudi","2fa"],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://authentica.sa",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Authentica"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/AuthenticaSA/n8n-node-authentica.git"
   },
   "engines": {
     "node": ">=20.15"
   },
-  "main": "index.js",
   "scripts": {
     "build": "npx rimraf dist && tsc && gulp build:icons",
     "dev": "tsc --watch",
@@ -28,25 +24,30 @@
     "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
   },
   "files": [
-    "dist"
+    "dist/nodes",
+    "dist/credentials",
+    "README.md",
+    "LICENSE.md",
+    "CHANGELOG.md"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
+      "dist/credentials/AuthenticaApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/Authentica/Authentica.node.js"
     ]
   },
   "devDependencies": {
+    "@types/node": "^24.3.1",
     "@typescript-eslint/parser": "~8.32.0",
+    "cpy-cli": "^6.0.0",
     "eslint": "^8.57.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.3",
     "gulp": "^5.0.0",
     "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
