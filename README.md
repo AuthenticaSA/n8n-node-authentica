@@ -18,7 +18,6 @@ This first release focuses on the essentials:
 * **OTP → Send** (SMS / WhatsApp / Email)
 * **OTP → Verify**
 
-> Face & Voice operations will ship in a later version. The UI only exposes the three endpoints above.
 
 ---
 
@@ -38,8 +37,6 @@ This first release focuses on the essentials:
 2. Search for **Authentica** (package **`n8n-nodes-authentica`**).
 3. Click **Install** and confirm the warning screen.
 4. n8n downloads the package from npm and reloads. You’ll now see **Authentica** in the Nodes panel.
-
-> If you don’t see “Community Nodes”, your admin needs to enable it for your instance. On n8n Cloud it’s available by default.
 
 ### Update / Uninstall
 
@@ -64,7 +61,7 @@ Create a new credential in **Credentials → New → Authentica API**.
 
 **Fields**
 
-* **API Key** *(required)*: your Authentica key (sent as `X-Authorization`)
+* **API Key** *(required)*: your Authentica key (sent as `X-Authorization`) 
 * **Base URL** *(optional)*: defaults to `https://api.authentica.sa`
 
 **Test**
@@ -79,7 +76,7 @@ Create a new credential in **Credentials → New → Authentica API**.
 
 * **Resource:** `Account`
 * **Operation:** `Get Balance`
-* **Output:** `{ balance: number, currency?: string, ... }`
+* **Output:** `{ balance: number }`
 
 ### 2) OTP → Send
 
@@ -94,10 +91,9 @@ Create a new credential in **Credentials → New → Authentica API**.
 
 ```json
 {
-  "status": "sent",
-  "recipient": "+9665XXXXXXX",
-  "channel": "sms",
-  "requestId": "req_12345"
+	"success": true,
+	"data": null,
+	"message": "OTP send successfully"
 }
 ```
 
@@ -112,9 +108,8 @@ Create a new credential in **Credentials → New → Authentica API**.
 
 ```json
 {
-  "verified": true,
-  "recipient": "+9665XXXXXXX",
-  "method": "phone"
+	"status": true,
+	"message": "OTP verified successfully"
 }
 ```
 
@@ -122,18 +117,6 @@ Create a new credential in **Credentials → New → Authentica API**.
 >
 > * Phone must be E.164 (`+<country><number>`). Example KSA mobile: `+9665…`
 > * Email must be a well‑formed address.
-
----
-
-## 🧪 Quick‑start workflows (JSON)
-
-Exported examples to help you test fast:
-
-* `examples/authentica-balance.json` — single node, get balance
-* `examples/authentica-otp-send.json` — send OTP to phone/email
-* `examples/authentica-otp-verify.json` — verify a received OTP code
-
-> In the editor, **Import from file** and run. Make sure your **Authentica API** credential is configured.
 
 ---
 
@@ -157,7 +140,6 @@ export N8N_CUSTOM_EXTENSIONS="$PWD"
 n8n start
 ```
 
-The build copies the SVG icon to `dist` so the node shows the Authentica logo inside the editor.
 
 ---
 
@@ -168,20 +150,13 @@ The build copies the SVG icon to `dist` so the node shows the Authentica logo in
 
 ---
 
-## 🗺️ Roadmap (next releases)
-
-* Face/Voice enrollment & verification
-* Webhooks for async outcomes (e.g., OTP delivery status)
-* Additional SMS features (sender IDs, templates)
-
----
 
 ## 🙌 Thanks
 
 Built by the **Authentica** team to help developers verify users and reduce fraud in Saudi Arabia.
 
 * Website: [https://authentica.sa](https://authentica.sa)
-* Issues / Feedback: open an issue in this repo
+* Issues / Feedback: [Support Email](mailto:support@authentica.sa)
 
 ---
 
@@ -199,16 +174,17 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
 ```
 
 ---
