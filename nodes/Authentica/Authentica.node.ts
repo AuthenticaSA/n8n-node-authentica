@@ -262,7 +262,7 @@ export class Authentica implements INodeType {
 
 				if (includeRaw && res) out.raw = res;
 
-				returnData.push({ json: out });
+				returnData.push({ json: out, pairedItem: { item: i } });
 			} catch (error) {
 				if (this.continueOnFail()) {
 					returnData.push({

@@ -199,5 +199,3 @@ THE SOFTWARE.
 ├─ CHANGELOG.md
 └─ package.json
 ```
-
-> If the logo doesn’t render on npm, update the `<img>` at the top to a public URL (e.g., GitHub raw link).
